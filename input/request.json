@@ -1,0 +1,22 @@
+{
+    "STARTING_SENTENCE": "The intersection of quantum mechanics and consciousness",
+    "MANDATORY_WORD": [
+        "quantum",
+        "emergence",
+        "observer"
+    ],
+    "PREFERRED_IMAGERY": [
+        "wave function",
+        "superposition",
+        "entanglement",
+        "decoherence",
+        "measurement problem"
+    ],
+    "CHAINS_COUNT": 60,
+    "MODE_SELECTION": "CHAOS",
+    "SELECTION_B_COUNT": 6,
+    "REFINING_COUNT": 2,
+    "DIRECTION": "Generate creative hypotheses exploring the relationship between quantum phenomena and conscious experience",
+    "FINAL_LANGUAGE": "English",
+    "LANGUAGE_RULE": "NO_3_CONSECUTIVE_FOREIGN_WORDS"
+}

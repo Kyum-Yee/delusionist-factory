@@ -1,0 +1,89 @@
+# Delusionist Factory - One-Click Prompt
+
+아래 내용을 AI 에이전트(Claude, Gemini 등)에게 전달하면 자동으로 전체 파이프라인을 실행합니다.
+
+---
+
+## 🚀 How to Use
+
+1. `input/request.json`에 원하는 주제 설정
+2. 이 prompt.txt 내용을 AI에게 붙여넣기
+3. AI가 알아서 Step 1 → Step 2 → Step 3 완료
+
+---
+
+## 📋 One-Click Request Prompt
+
+```
+이 프로젝트 폴더(delusionist_factory)에서 Delusionist Factory를 실행해줘.
+
+작업 내용:
+1. input/request.json 읽기
+2. main.py 실행 → 출력된 Agent 작업 지시 확인
+3. Agent 작업 수행 (망상적 변이 문장 생성)
+4. 결과를 output/ 폴더의 해당 파일에 append
+5. 다시 main.py 실행 → 다음 배치 또는 다음 Step 진행
+6. "ALL STEPS COMPLETE" 메시지가 나올 때까지 반복
+
+주의사항:
+- Step 1: section_a_chains.txt에 CHAINS_COUNT개의 문장 생성
+- Step 2: section_b_refined.txt에 SELECTION_B_COUNT개의 정제 문장 생성
+- Step 3: section_c_final.txt에 REFINING_COUNT개의 최종 결과물 생성
+- 매 문장에 MANDATORY_WORD 필수 포함
+- 한국어+영어 혼용시 영어 3단어 연속 사용 금지
+
+끝나면 output/section_c_final.txt 내용을 보여줘.
+```
+
+---
+
+## 📁 Project Structure
+
+```
+delusionist_factory/
+├── input/
+│   ├── request.json      # 설정 파일 (주제, 필수 단어 등)
+│   └── 100000word.txt    # 랜덤 단어 풀
+├── output/
+│   ├── section_a_chains.txt   # Step 1 결과
+│   ├── section_b_refined.txt  # Step 2 결과
+│   └── section_c_final.txt    # Step 3 최종 결과
+├── staging/
+│   └── state.json        # 진행 상태 추적
+├── main.py               # 엔진 코어
+└── prompt.txt            # 이 파일
+```
+
+---
+
+## ⚙️ request.json 필드 설명
+
+| 필드 | 설명 | 예시 |
+|------|------|------|
+| STARTING_SENTENCE | 시작 주제/문장 | "AI creativity mechanisms" |
+| MANDATORY_WORD | 필수 포함 단어 배열 | ["entropy", "bridge"] |
+| PREFERRED_IMAGERY | AI 참조 이미지어 | ["neural", "chaos"] |
+| CHAINS_COUNT | Step 1 생성 문장 수 | 120 |
+| MODE_SELECTION | "CHAOS" (70% 랜덤) 또는 "NUANCE" (30% 랜덤) | "CHAOS" |
+| SELECTION_B_COUNT | Step 2 정제 문장 수 | 8 |
+| REFINING_COUNT | Step 3 최종 출력 수 | 2 |
+| DIRECTION | 최종 결과물 방향성 | "Generate innovative..." |
+| FINAL_LANGUAGE | 최종 출력 언어 | "English" 또는 "Korean" |
+
+---
+
+## 🔄 Reset (새로 시작하려면)
+
+```bash
+rm -rf output/* staging/*
+```
+
+---
+
+## 💡 Core Concept
+
+Stochastic Context Pollution:
+- 깨끗한 맥락 → 확률적 평균 수렴 (진부한 결과)
+- 오염된 맥락 → 창의적 연결 강제 (혁신적 결과)
+
+LLM은 스스로를 놀라게 할 수 없다. 외부 무작위성(Python random.sample)이 확률 곡선을 깬다.
